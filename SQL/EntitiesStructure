@@ -1,0 +1,88 @@
+-- 1. Employees table
+CREATE TABLE employees (
+    emp_id TINYINT AUTO_INCREMENT PRIMARY KEY,
+    emp_name VARCHAR(255),
+    hire_date VARCHAR(255)
+);
+
+-- 2. Customers table
+CREATE TABLE customers (
+    cust_id SMALLINT AUTO_INCREMENT PRIMARY KEY,
+    cust_name VARCHAR(255),
+    address TEXT
+);
+
+-- 3. Supplier table
+CREATE TABLE supplier (
+    sup_id TINYINT AUTO_INCREMENT PRIMARY KEY,
+    sup_name VARCHAR(255),
+    address TEXT
+);
+
+-- 4. Categories table
+CREATE TABLE categories (
+    cat_id TINYINT AUTO_INCREMENT PRIMARY KEY,
+    cat_name VARCHAR(255)
+);
+
+-- 5. Products table
+CREATE TABLE products (
+    prod_id TINYINT AUTO_INCREMENT PRIMARY KEY,
+    prod_name VARCHAR(255),
+    sup_id TINYINT,
+    cat_id TINYINT,
+    price DECIMAL(10,2),
+    FOREIGN KEY (sup_id) REFERENCES supplier(sup_id),
+    FOREIGN KEY (cat_id) REFERENCES categories(cat_id)
+);
+
+-- 6. Orders table
+CREATE TABLE orders (
+    ord_id SMALLINT AUTO_INCREMENT PRIMARY KEY,
+    cust_id SMALLINT,
+    emp_id TINYINT,
+    order_date VARCHAR(255),
+    FOREIGN KEY (cust_id) REFERENCES customers(cust_id),
+    FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
+);
+
+-- 7. Order Details table
+CREATE TABLE order_details (
+    ord_detID SMALLINT AUTO_INCREMENT PRIMARY KEY,
+    ord_id SMALLINT,
+    prod_id TINYINT,
+    quantity INT,
+    total_price DECIMAL(10,2),
+    FOREIGN KEY (ord_id) REFERENCES orders(ord_id),
+    FOREIGN KEY (prod_id) REFERENCES products(prod_id)
+);
+
+-- 8. User Type table
+CREATE TABLE user_type (
+    user_type_id TINYINT AUTO_INCREMENT PRIMARY KEY,
+    user_type_name VARCHAR(50) NOT NULL
+);
+
+-- 9. Sales table
+CREATE TABLE sales (
+    sale_id SMALLINT AUTO_INCREMENT PRIMARY KEY,
+    ord_id SMALLINT,
+    cust_id SMALLINT,
+    emp_id TINYINT,
+    sale_date DATE,
+    total_amount DECIMAL(10,2),
+    FOREIGN KEY (ord_id) REFERENCES orders(ord_id),
+    FOREIGN KEY (cust_id) REFERENCES customers(cust_id),
+    FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
+);
+
+-- 10. Payment table
+CREATE TABLE payment (
+    payment_id SMALLINT AUTO_INCREMENT PRIMARY KEY,
+    sale_id SMALLINT,
+    payment_date DATE,
+    payment_method VARCHAR(50),
+    amount_paid DECIMAL(10,2),
+    payment_status VARCHAR(50),
+    FOREIGN KEY (sale_id) REFERENCES sales(sale_id)
+);
