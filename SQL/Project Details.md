@@ -1,3 +1,5 @@
+# 👉Grocery Store Management - SQL 
+
 ### Skills:- 
 SQL, Database Design, Schema Creation, Joins, Aggregations, Data Analysis, CSV Import 
 
